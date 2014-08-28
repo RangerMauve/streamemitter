@@ -1,13 +1,14 @@
-var EventEmitter = require("events").EventEmitter;
 var streams = require("stream");
 var Readable = streams.Readable;
 var Writable = streams.Writable;
 
-function StreamEmitter() {
+exports.StreamEmitter = StreamEmitter;
 
+function StreamEmitter(emitter) {
+	if (!emitter.on || !emitter.emit || !emitter.removeListener)
+		throw new Error("Invalid EventEmitter instance passed to StreamEmitter");
+	this._emitter = emitter;
 }
-
-StreamEmitter.prototype._emitter = null;
 
 StreamEmitter.prototype.on = function(event, fn) {
 	var emitter = this._emitter;
@@ -16,13 +17,19 @@ StreamEmitter.prototype.on = function(event, fn) {
 	var stream = new Readable({
 		objectMode: true
 	});
-	emitter.on(event, function(data) {
-		stream.push(data);
-	});
+	stream._read = function() {
+		// No-op
+	}
+	emitter.on(event, handler);
+
+	function handler(data) {
+		if (!stream.push(data))
+			emitter.removeListener(event, handler);
+	}
 	return stream;
 }
 
-StreamEmitter.prototype.emit(topic, data) {
+StreamEmitter.prototype.emit = function(topic, data) {
 	var emitter = this._emitter;
 	if (!emitter) throw new Error("StreamEmitter not properly inialized");
 	if (data)
@@ -37,7 +44,7 @@ StreamEmitter.prototype.emit(topic, data) {
 	return stream;
 }
 
-StreamEmitter.prototype.removeListener(event, listener) {
+StreamEmitter.prototype.removeListener = function(event, listener) {
 	var emitter = this._emitter;
 	if (!emitter) throw new Error("StreamEmitter not properly inialized");
 	return this.emitter.removeListener(event, listener);
