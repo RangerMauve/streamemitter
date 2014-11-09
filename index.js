@@ -5,6 +5,8 @@ var Writable = streams.Writable;
 exports.StreamEmitter = StreamEmitter;
 
 function StreamEmitter(emitter) {
+	if (this!instanceof StreamEmitter)
+		return new StreamEmitter(emitter);
 	if (!emitter.on || !emitter.emit || !emitter.removeListener)
 		throw new Error("Invalid EventEmitter instance passed to StreamEmitter");
 	this._emitter = emitter;
