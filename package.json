@@ -1,6 +1,6 @@
 {
   "name": "StreamEmitter",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Wraps around EventEmitter-compatible objects and uses streams rather than callbacks",
   "main": "index.js",
   "scripts": {
