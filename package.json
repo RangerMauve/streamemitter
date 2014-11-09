@@ -1,5 +1,5 @@
 {
-  "name": "StreamEmitter",
+  "name": "streamemitter",
   "version": "1.0.0",
   "description": "Wraps around EventEmitter-compatible objects and uses streams rather than callbacks",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/RangerMauve/StreamEmitter.git"
+    "url": "git://github.com/RangerMauve/streamemitter.git"
   },
   "keywords": [
     "stream",
@@ -19,7 +19,7 @@
   "author": "RangerMauve",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/RangerMauve/StreamEmitter/issues"
+    "url": "https://github.com/RangerMauve/streamemitter/issues"
   },
-  "homepage": "https://github.com/RangerMauve/StreamEmitter"
+  "homepage": "https://github.com/RangerMauve/streamemitter"
 }
